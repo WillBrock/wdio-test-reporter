@@ -1,3 +1,4 @@
+const btoa         = require(`btoa`);
 const WDIOReporter = require('@wdio/reporter').default;
 
 class TestReporter extends WDIOReporter {
@@ -32,9 +33,8 @@ class TestReporter extends WDIOReporter {
 			start        : runner.start,
 			end          : runner.end,
 			duration     : runner._duration,
-			retries      : runner.retries,
-			retry        : runner.retry,
-			spec_id      : runner.specs[0].match(/([^/]+)\.js/)[1],
+			retries      : runner.retry,
+			spec_file    : runner.specs[0].match(/([^/]+)\.js/)[1],
 			passed       : runner.failures === 0 ? 1 : 0,
 			skipped      : 0,
 			failed       : runner.failures > 0 ? 1 : 0,
@@ -45,11 +45,17 @@ class TestReporter extends WDIOReporter {
 		let total_skipped = 0;
 		let total_tests   = 0;
 
+		// This will get used if they are using mocha retires and not specFileRetries
+		let max_retries = 0;
+
 		for(const tmp_suite of this.suites) {
 			const suite = this.getEventsToReport(tmp_suite);
 
+			const unique_tests       = {};
+			const unique_test_errors = {};
 			for(const test of suite) {
-				const state = test.state;
+				const identifier = btoa(test.title);
+				const state      = test.state;
 
 				const test_data = {
 					title    : test.title,
@@ -59,6 +65,7 @@ class TestReporter extends WDIOReporter {
 					passed   : state === `passed` ? 1 : 0,
 					failed   : state === `failed` ? 1 : 0,
 					skipped  : state === `skipped` ? 1 : 0,
+					retries  : test.retries,
 				};
 
 				total_tests++;
@@ -67,13 +74,38 @@ class TestReporter extends WDIOReporter {
 					total_skipped++;
 				}
 
-				suite_data.tests.push(test_data);
+				if(max_retries < test.retries) {
+					max_retries = test.retries;
+				}
+
+				if(!unique_test_errors[identifier]) {
+					unique_test_errors[identifier] = [];
+				}
+
+				if(test.error) {
+					unique_test_errors[identifier].push({
+						message : test.error.message,
+						stack   : test.error.stack,
+					});
+				}
+
+				unique_tests[identifier] = test_data;
+			}
+
+			// Add the unique test data and errors
+			for(const identifier in unique_tests) {
+				unique_tests[identifier].errors = unique_test_errors[identifier];
+				suite_data.tests.push(unique_tests[identifier]);
 			}
 		}
 
 		if(total_tests === total_skipped) {
 			suite_data.skipped = 1;
 			suite_data.passed  = 0;
+		}
+
+		if(!this.options.specFileRetries) {
+			suite_data.retries = max_retries;
 		}
 
 		this.results = suite_data;
@@ -93,42 +125,6 @@ class TestReporter extends WDIOReporter {
 
 exports.default = TestReporter;
 /*
-{
-	"project_id" : 1234,
-	"run_date" : "",
-	"title" : "Foobar",
-	"suites_ran" : "Login",
-	"duration" : 150,
-	"version" : "2.8.5",
-	"passed" : 1,
-	"failed" : 0,
-	"suites" : [
-		{
-			"title" : "Foo",
-			"capabilities" : "Linux/firefox",
-			"duration" : 2671,
-			"start" : "",
-			"end" : "",
-			"spec_file" : "foobar.e2e.js",
-			"passed" : 1,
-			"failed" : 0,
-			"skipped" : 0,
-			"retries" : 2,
-			"tests" : [
-				{
-					"title" : "Test login",
-					"duration" : 1982,
-					"start" : "",
-					"end" : "",
-					"passed" : 1,
-					"failed" : 0,
-					"skipped" : 0,
-					"errors" : []
-				}
-			]
-		}
-	]
-}
 
 "type": "test",
 				"start": "2021-02-13T19:47:32.414Z",

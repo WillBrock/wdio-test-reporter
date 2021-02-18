@@ -34,7 +34,7 @@ class TestReporter extends WDIOReporter {
 			end          : runner.end,
 			duration     : runner._duration,
 			retries      : runner.retry,
-			spec_file    : runner.specs[0].match(/([^/]+)\.js/)[1],
+			spec_file    : runner.specs[0].match(/([^/]+\.js)/)[1],
 			passed       : runner.failures === 0 ? 1 : 0,
 			skipped      : 0,
 			failed       : runner.failures > 0 ? 1 : 0,
@@ -84,8 +84,8 @@ class TestReporter extends WDIOReporter {
 
 				if(test.error) {
 					unique_test_errors[identifier].push({
-						message : test.error.message,
-						stack   : test.error.stack,
+						message    : test.error.message,
+						stacktrace : test.error.stack,
 					});
 				}
 

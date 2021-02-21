@@ -124,17 +124,3 @@ class TestReporter extends WDIOReporter {
 }
 
 exports.default = TestReporter;
-/*
-
-"type": "test",
-				"start": "2021-02-13T19:47:32.414Z",
-				"_duration": 5,
-				"uid": "test-10-0",
-				"cid": "0-0",
-				"title": "some type of test",
-				"fullTitle": "Foo bar baz hello some type of test",
-				"output": [],
-				"retries": 0,
-				"state": "passed",
-				"end": "2021-02-13T19:47:32.419Z"
-*/

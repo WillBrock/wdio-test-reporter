@@ -124,3 +124,4 @@ class TestReporter extends WDIOReporter {
 }
 
 exports.default = TestReporter;
+

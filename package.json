@@ -4,7 +4,7 @@
   "description": "WebdriverIO reporter used for testreporter.io",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

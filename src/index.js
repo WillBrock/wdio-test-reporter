@@ -25,7 +25,8 @@ class TestReporter extends WDIOReporter {
 	}
 
 	setOutput(runner) {
-		const { capabilities } = runner;
+		const { capabilities }  = runner;
+		const spec_file_retries = runner.config.specFileRetries;
 
 		const suite_data = {
 			cid          : runner.cid,
@@ -65,7 +66,7 @@ class TestReporter extends WDIOReporter {
 					passed   : state === `passed` ? 1 : 0,
 					failed   : state === `failed` ? 1 : 0,
 					skipped  : state === `skipped` ? 1 : 0,
-					retries  : test.retries,
+					retries  : !spec_file_retries ? test.retries : runner.retry,
 				};
 
 				total_tests++;
@@ -104,7 +105,7 @@ class TestReporter extends WDIOReporter {
 			suite_data.passed  = 0;
 		}
 
-		if(!this.options.specFileRetries) {
+		if(!runner.config.specFileRetries) {
 			suite_data.retries = max_retries;
 		}
 

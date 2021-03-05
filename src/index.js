@@ -29,10 +29,7 @@ class TestReporter extends WDIOReporter {
 		const spec_file_retries = runner.config.specFileRetries;
 
 		const suite_data = {
-			cid          : runner.cid,
 			capabilities : `${capabilities.platformName}/${capabilities.browserName} ${capabilities.browserVersion}`,
-			start        : runner.start,
-			end          : runner.end,
 			duration     : runner._duration,
 			retries      : runner.retry,
 			spec_file    : runner.specs[0].match(/([^/]+\.js)/)[1],
@@ -60,8 +57,6 @@ class TestReporter extends WDIOReporter {
 
 				const test_data = {
 					title    : test.title,
-					start    : test.start,
-					end      : test.end,
 					duration : test._duration,
 					passed   : state === `passed` ? 1 : 0,
 					failed   : state === `failed` ? 1 : 0,
@@ -121,6 +116,10 @@ class TestReporter extends WDIOReporter {
 			...suite.tests,
 			...suite.hooks.filter((hook) => Boolean(hook.error)),
 		];
+	}
+
+	replaceColors(string) {
+		return string.replace(/\\u001b\[2m|\\u001b\[22m|\\u001b\[31m|\\u001b\[39m|\\u001b\[32m/g, ``);
 	}
 }
 

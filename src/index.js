@@ -56,6 +56,7 @@ class TestReporter extends WDIOReporter {
 				const state      = test.state;
 
 				const test_data = {
+					type     : suite.type,
 					title    : test.title,
 					duration : test._duration,
 					passed   : state === `passed` ? 1 : 0,

@@ -1,6 +1,6 @@
 # WebdriverIO Test Reporter
 
-Outputs tests results in json files that are compatible with using the [wdio-test-reporter-service](https://github.com/WillBrock/wdio-test-reporter-service) to store results in testreporter.io
+Outputs tests results in json files that are compatible with using the [wdio-test-reporter-service](https://github.com/WillBrock/wdio-test-reporter-service) to store results in [testreporter.io](https://testreporter.io)
 
 This reporter will generate one report file for each spec file
 
@@ -8,7 +8,7 @@ This reporter will generate one report file for each spec file
 
 ```
 reporters : [[`test`, {
-	outputDir : `./reports`
+	outputDir : `./testreporter`
 }]]
 ```
 

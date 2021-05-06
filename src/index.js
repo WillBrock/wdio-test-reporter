@@ -26,7 +26,7 @@ class TestReporter extends WDIOReporter {
 
 	setOutput(runner) {
 		const { capabilities }  = runner;
-		const spec_file_retries = runner.config.specFileRetries;
+		const spec_file_retries = driver.config.specFileRetries;
 
 		const suite_data = {
 			capabilities : `${capabilities.platformName}/${capabilities.browserName} ${capabilities.browserVersion}`,

@@ -105,6 +105,7 @@ class TestReporter extends WDIOReporter {
 			suite_data.retries = max_retries;
 		}
 
+		// Store the results
 		this.results = suite_data;
 	}
 

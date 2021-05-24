@@ -101,7 +101,7 @@ class TestReporter extends WDIOReporter {
 			suite_data.passed  = 0;
 		}
 
-		if(!runner.config.specFileRetries) {
+		if(!spec_file_retries) {
 			suite_data.retries = max_retries;
 		}
 

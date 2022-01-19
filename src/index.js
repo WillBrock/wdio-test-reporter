@@ -27,17 +27,20 @@ class TestReporter extends WDIOReporter {
 	setOutput(runner) {
 		const { capabilities }  = runner;
 		const spec_file_retries = driver.config.specFileRetries;
+		const spec_file         = runner.specs[0].match(/([^/]+\.js)/)[1];
+		const suite             = this.suites[this.suites.length - 1];
+		const suite_title       = suite ? suite.title : `Can't find suite title for ${spec_file}`;
 
 		const suite_data = {
 			capabilities : `${capabilities.platformName}/${capabilities.browserName} ${capabilities.browserVersion}`,
 			duration     : runner._duration,
 			retries      : runner.retry,
-			spec_file    : runner.specs[0].match(/([^/]+\.js)/)[1],
+			spec_file    : spec_file,
 			passed       : runner.failures === 0 ? 1 : 0,
 			skipped      : 0,
 			failed       : runner.failures > 0 ? 1 : 0,
 			tests        : [],
-			title        : this.suites[this.suites.length - 1].title,
+			title        : suite_title,
 		};
 
 		let total_skipped = 0;

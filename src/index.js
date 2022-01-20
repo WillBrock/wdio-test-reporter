@@ -104,6 +104,11 @@ class TestReporter extends WDIOReporter {
 			suite_data.passed  = 0;
 		}
 
+		// Force the test to be marked as skipped if it fails to get any suite data, this.suites
+		if(total_tests === 0 && total_skipped === 0) {
+			suite_data.failed = 0;
+		}
+
 		if(!spec_file_retries) {
 			suite_data.retries = max_retries;
 		}

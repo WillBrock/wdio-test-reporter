@@ -1,6 +1,6 @@
 {
   "name": "wdio-test-reporter",
-  "version": "0.1.12",
+  "version": "8.0.0",
   "description": "WebdriverIO reporter used for testreporter.io",
   "type": "module",
   "main": "src/index.js",
@@ -25,7 +25,6 @@
   "author": "Will Brock",
   "license": "ISC",
   "dependencies": {
-    "@wdio/globals": "^8.6.3",
     "@wdio/reporter": "^8.4.0",
     "btoa": "^1.2.1"
   }

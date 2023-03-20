@@ -27,8 +27,7 @@ export default class TestReporter extends WDIOReporter {
 
 	setOutput(runner) {
 		const { capabilities }  = runner;
-		console.log(`driver...`, driver);
-		const spec_file_retries = driver.config.specFileRetries;
+		const spec_file_retries = driver.options.specFileRetries;
 		const spec_file         = runner.specs[0].match(/([^/]+\.js)/)[1];
 		const suite             = this.suites[this.suites.length - 1];
 		const suite_title       = suite ? suite.title : `Can't find suite title for ${spec_file}`;

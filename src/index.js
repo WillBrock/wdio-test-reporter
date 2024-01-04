@@ -1,7 +1,8 @@
-const btoa         = require(`btoa`);
-const WDIOReporter = require('@wdio/reporter').default;
+import btoa         from 'btoa';
+import WDIOReporter from '@wdio/reporter';
+import { driver }   from '@wdio/globals';
 
-class TestReporter extends WDIOReporter {
+export default class TestReporter extends WDIOReporter {
 	constructor(options = {}) {
 		options = Object.assign({
 			stdout : false,
@@ -26,7 +27,7 @@ class TestReporter extends WDIOReporter {
 
 	setOutput(runner) {
 		const { capabilities }  = runner;
-		const spec_file_retries = driver.config.specFileRetries;
+		const spec_file_retries = driver.options.specFileRetries;
 		const spec_file         = runner.specs[0].match(/([^/]+\.js)/)[1];
 		const suite             = this.suites[this.suites.length - 1];
 		const suite_title       = suite ? suite.title : `Can't find suite title for ${spec_file}`;
@@ -132,6 +133,3 @@ class TestReporter extends WDIOReporter {
 		return string.replace(/\\u001b\[2m|\\u001b\[22m|\\u001b\[31m|\\u001b\[39m|\\u001b\[32m/g, ``);
 	}
 }
-
-exports.default = TestReporter;
-

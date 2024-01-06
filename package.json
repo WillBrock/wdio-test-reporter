@@ -27,5 +27,8 @@
   "dependencies": {
     "@wdio/reporter": "^8.27.0",
     "btoa": "^1.2.1"
+  },
+  "devDependencies": {
+    "release-it": "^17.0.1"
   }
 }

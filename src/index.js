@@ -42,6 +42,7 @@ export default class TestReporter extends WDIOReporter {
 			failed       : runner.failures > 0 ? 1 : 0,
 			tests        : [],
 			title        : suite_title,
+			start        : runner.start,
 		};
 
 		let total_skipped = 0;

@@ -37,6 +37,7 @@ export default class TestReporter extends WDIOReporter {
 			duration     : runner._duration,
 			retries      : runner.retry,
 			spec_file    : spec_file,
+			filepath     : suite.file,
 			passed       : runner.failures === 0 ? 1 : 0,
 			skipped      : 0,
 			failed       : runner.failures > 0 ? 1 : 0,

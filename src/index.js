@@ -88,8 +88,8 @@ export default class TestReporter extends WDIOReporter {
 
 				if(test.error) {
 					unique_test_errors[identifier].push({
-						message    : test.error.message,
-						stacktrace : test.error.stack,
+						message    : stripAnsi(test.error.message),
+						stacktrace : stripAnsi(test.error.stack),
 					});
 				}
 
@@ -130,9 +130,5 @@ export default class TestReporter extends WDIOReporter {
 			...suite.tests,
 			...suite.hooks.filter((hook) => Boolean(hook.error)),
 		];
-	}
-
-	replaceColors(string) {
-		return stripAnsi(string);
 	}
 }

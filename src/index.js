@@ -1,4 +1,5 @@
 import btoa         from 'btoa';
+import stripAnsi    from 'strip-ansi';
 import WDIOReporter from '@wdio/reporter';
 import { driver }   from '@wdio/globals';
 
@@ -132,6 +133,6 @@ export default class TestReporter extends WDIOReporter {
 	}
 
 	replaceColors(string) {
-		return string.replace(/\\u001b\[2m|\\u001b\[22m|\\u001b\[31m|\\u001b\[39m|\\u001b\[32m/g, ``);
+		return stripAnsi(string);
 	}
 }
